@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Home from "./Home";
 import Quiz from "./Quiz";
 import Facts from "./Facts";
@@ -8,7 +8,7 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <div className="app-container"> {/* Use a div, NOT a Router */}
       <nav className="navbar">
         <Link to="/" className="logo">Fact or Quack 🦆</Link>
         <div className="nav-links">
@@ -24,7 +24,7 @@ function App() {
         <Route path="/facts" element={<Facts />} />
         <Route path="/challenge" element={<Challenge />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 
