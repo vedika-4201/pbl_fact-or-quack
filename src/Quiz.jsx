@@ -7,14 +7,14 @@ const QUIZ_DATA = {
     { q: "Carrots were originally purple.", a: "fact", info: "Orange ones were bred later in the Netherlands." }
   ],
   Medicine: [
-    { q: "Antibiotics kill viruses.", a: "myth", info: "Antibiotics only work on bacteria." },
-    { q: "You use only 10% of your brain.", a: "myth", info: "Scans show we use almost every part." },
-    { q: "Cracking your knuckles causes arthritis.", a: "myth", info: "It's just gas bubbles popping." }
+    { q: "Antibiotics kill viruses.", a: "myth", info: "They only work on bacteria." },
+    { q: "You use only 10% of your brain.", a: "myth", info: "Brain scans show we use most of it." },
+    { q: "Cracking knuckles causes arthritis.", a: "myth", info: "No scientific evidence supports that." }
   ],
   Science: [
-    { q: "Goldfish have a 3-second memory.", a: "myth", info: "They can remember things for months." },
-    { q: "There is no gravity in space.", a: "myth", info: "Gravity is everywhere; astronauts just 'freefall'." },
-    { q: "Diamond is made from highly compressed coal.", a: "myth", info: "Most diamonds are much older than coal!" }
+    { q: "Goldfish have 3-second memory.", a: "myth", info: "They can remember things for months." },
+    { q: "There is no gravity in space.", a: "myth", info: "Astronauts are in freefall." },
+    { q: "Diamonds are made from coal.", a: "myth", info: "Most diamonds predate coal." }
   ]
 };
 
@@ -26,52 +26,45 @@ function Quiz() {
   const [verdict, setVerdict] = useState(null);
 
   const handleAnswer = (choice) => {
-    const isCorrect = choice === QUIZ_DATA[category][currentIdx].a;
-    setVerdict(isCorrect ? "Correct!" : "Wrong!");
-    if (isCorrect) setScore(score + 1);
+    const correct = choice === QUIZ_DATA[category][currentIdx].a;
+    setVerdict(correct ? "Correct!" : "Wrong!");
+    if (correct) setScore(prev => prev + 1);
     setShowResult(true);
   };
 
   const nextQuestion = () => {
-    setShowResult(false);
-    setVerdict(null);
     if (currentIdx < QUIZ_DATA[category].length - 1) {
-      setCurrentIdx(currentIdx + 1);
+      setCurrentIdx(prev => prev + 1);
+      setShowResult(false);
+      setVerdict(null);
     } else {
-      alert(`Quiz Finished! Your score: ${score + (verdict === "Correct!" ? 1 : 0)}/${QUIZ_DATA[category].length}`);
-      resetQuiz();
+      setCategory(null);
+      setCurrentIdx(0);
+      setShowResult(false);
+      setVerdict(null);
+      alert(`Final Score: ${score}/${QUIZ_DATA[category].length}`);
+      setScore(0);
     }
   };
 
-  const resetQuiz = () => {
-    setCategory(null);
-    setCurrentIdx(0);
-    setScore(0);
-    setShowResult(false);
-  };
-
-  // 1. CATEGORY SELECTION SCREEN
-  // ... (Keep the QUIZ_DATA and other functions the same as before)
-
-  // 1. CATEGORY SELECTION SCREEN
   if (!category) {
     const categories = [
-      { id: 'Food', icon: '🍕' },
-      { id: 'Medicine', icon: '🧪' },
-      { id: 'Science', icon: '🧬' }
+      { id: "Food", icon: "🍕" },
+      { id: "Medicine", icon: "🧪" },
+      { id: "Science", icon: "🧬" }
     ];
 
     return (
-      <div className="page-wrapper">
-        <div className="page-card quiz-bg">
-          <h2 style={{ marginBottom: '10px' }}>Choose Your Topic</h2>
-          <p style={{ color: '#666' }}>Test your knowledge in a specific field</p>
-          
-          <div className="category-grid">
-            {categories.map((cat) => (
-              <button 
-                key={cat.id} 
-                className="category-btn" 
+      <div className="game-container">
+        <div className="game-card">
+          <h2>Choose Your Topic</h2>
+          <p className="sub-text">Pick a category to begin</p>
+
+          <div className="category-grid-new">
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                className="category-box"
                 onClick={() => setCategory(cat.id)}
               >
                 <span className="icon">{cat.icon}</span>
@@ -84,16 +77,17 @@ function Quiz() {
     );
   }
 
-// ... (Keep the rest of the Quiz return logic the same)
-
-  // 2. QUIZ SCREEN
-  const currentQuestion = QUIZ_DATA[category][currentIdx];
+  const question = QUIZ_DATA[category][currentIdx];
 
   return (
-    <div className="page-wrapper">
-      <div className="page-card quiz-bg">
-        <span style={{ fontWeight: 'bold', color: '#5f27cd' }}>{category} Quiz</span>
-        <h3 style={{ margin: '30px 0' }}>“{currentQuestion.q}”</h3>
+    <div className="game-container">
+      <div className="game-card">
+        <div className="game-header">
+          <span>{category} Quiz</span>
+          <span>Score: {score}</span>
+        </div>
+
+        <h3 className="question-text">“{question.q}”</h3>
 
         {!showResult ? (
           <div className="quiz-buttons">
@@ -101,11 +95,11 @@ function Quiz() {
             <button onClick={() => handleAnswer("myth")}>Myth</button>
           </div>
         ) : (
-          <div className="result-box">
-            <h4 style={{ color: verdict === "Correct!" ? "#2ecc71" : "#eb4d4b" }}>{verdict}</h4>
-            <p>{currentQuestion.info}</p>
-            <button className="quiz-buttons" onClick={nextQuestion} style={{ marginTop: '15px' }}>
-              {currentIdx < QUIZ_DATA[category].length - 1 ? "Next Question" : "Finish"}
+          <div className="game-over">
+            <h4>{verdict}</h4>
+            <p>{question.info}</p>
+            <button onClick={nextQuestion}>
+              {currentIdx < QUIZ_DATA[category].length - 1 ? "Next" : "Finish"}
             </button>
           </div>
         )}
@@ -115,4 +109,3 @@ function Quiz() {
 }
 
 export default Quiz;
-

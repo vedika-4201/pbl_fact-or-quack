@@ -1,68 +1,88 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 import ClaimChecker from "./ClaimChecker";
 
 function Dashboard({ setIsLoggedIn }) {
   return (
     <div className="pinterest-dashboard">
-      {/* Soft Sidebar */}
       <aside className="glass-sidebar">
         <div className="brand-zone">
-          <span className="duck-emoji">🐥</span>
-          <h2 className="brand-name">Fact<span>or</span>Quack</h2>
+          <h2 className="brand-name">
+            Fact<span>or</span>Quack
+          </h2>
         </div>
+
         <nav className="side-nav">
-          <div className="nav-item active">✨ Feed</div>
-          <div className="nav-item">📚 Propaganda Lab</div>
-          <div className="nav-item">🔍 Deep Scan</div>
-        </nav>
-        <button className="logout-minimal" onClick={() => setIsLoggedIn(false)}>Logout</button>
+  
+  <Link to="/learning" className="nav-item">📚 Learning Hub</Link>
+  <Link to="/fallacies" className="nav-item">🧠 Fallacies</Link>
+  <Link to="/myth" className="nav-item">🧬 Myth Evolution</Link>
+  <Link to="/history" className="nav-item">📜 History</Link>
+  
+  <Link to="/quiz" className="nav-item">🧠 Quiz</Link>
+  <Link to="/facts" className="nav-item">🎲 Facts</Link>
+  <Link to="/challenges" className="nav-item">🔥 Challenges</Link>
+</nav>
+
+
+        <button
+          className="logout-minimal"
+          onClick={() => setIsLoggedIn(false)}
+        >
+          Logout
+        </button>
       </aside>
 
       <main className="content-stage">
-        {/* Shock Ticker */}
-        <div className="glitter-ticker">
-          <p>⚡ <b>DID YOU KNOW?</b> Most "carrots help sight" ads were actually 1940s radar secrets! ⚡</p>
+        <div className="glitter-ticker center-ticker">
+          ⚡ Most "carrots help eyesight" campaigns were WWII propaganda.
         </div>
 
         <header className="main-header">
-          <h1>Welcome, Buster <span className="sparkle">✨</span></h1>
-          <p>Ready to unmask some myths today?</p>
+          <h1>
+            Welcome Back <span className="sparkle">✨</span>
+          </h1>
+          <p>Let’s debunk something today.</p>
         </header>
 
+        {/* Claim Checker Expanded */}
         <div className="bento-layout">
-          {/* Main Verification Card */}
-          <div className="bento-item checker-card-pro">
-            <div className="card-top">
-               <h3>Claim Verification Pipeline</h3>
-               <span className="ai-badge">AI Active</span>
-            </div>
+          <div className="bento-item checker-card-expanded">
             <ClaimChecker />
           </div>
+        </div>
 
-          {/* Shock Factor / Rabbit Hole Card */}
-          <div className="bento-item rabbit-hole-card">
-             <div className="rabbit-content">
-                <span className="tag-yellow">THE RABBIT HOLE 🐰</span>
-                <h2>Why do we think 7 years for gum to digest?</h2>
-                <p>It was a <strong>scare tactic</strong> by parents in the 50s. Science says it passes in days!</p>
-                <button className="read-more">Learn History →</button>
-             </div>
+        {/* Feature Cards Below */}
+        <div className="feature-section">
+          <div className="feature-card">
+            <h3>🧠 Quiz Mode</h3>
+            <p>Test your myth-detection skills.</p>
+            <Link to="/quiz">
+              <button className="fancy-btn">Play →</button>
+            </Link>
           </div>
 
-          {/* Quack-O-Meter Card */}
-          <div className="bento-item meter-fun-card">
-             <h3>Quack-O-Meter</h3>
-             <div className="meter-ring-container">
-                <div className="meter-base"></div>
-                <div className="meter-pointer-hand" style={{transform: 'rotate(-30deg)'}}></div>
-             </div>
-             <p className="verdict-bubble">Suspicious</p>
+          <div className="feature-card">
+            <h3>🎲 Random Facts</h3>
+            <p>Explore surprising science truths.</p>
+            <Link to="/facts">
+              <button className="fancy-btn">Explore →</button>
+            </Link>
           </div>
 
-          {/* Mini Fact Card */}
-          <div className="bento-item mini-shocker">
-             <p>🤯 <b>SHOCK FACTOR:</b> "Drinking 8 glasses of water" has <b>no</b> scientific basis.</p>
+          <div className="feature-card">
+            <h3>🔥 Rapid Fire</h3>
+            <p>Speed round. No overthinking.</p>
+            <Link to="/challenges">
+              <button className="fancy-btn">Play →</button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="bento-layout">
+          <div className="bento-item mini-shocker upgraded-shocker">
+            🤯 Drinking 8 glasses of water daily is not a scientific rule.
           </div>
         </div>
       </main>
@@ -71,3 +91,5 @@ function Dashboard({ setIsLoggedIn }) {
 }
 
 export default Dashboard;
+
+

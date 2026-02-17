@@ -1,34 +1,40 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Home from "./Home";
-import Quiz from "./Quiz";
-import Facts from "./Facts";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Dashboard from "./Dashboard";
+
+import LearningHub from "./LearningHub";
+import Fallacies from "./Fallacies";
+import MythEvolution from "./MythEvolution";
+import History from "./History";
+import Quiz from "./Quiz";           
+import Facts from "./Facts";         
 import Challenge from "./Challenge";
 import "./App.css";
 
 function App() {
   return (
-    <div className="app-container"> {/* Use a div, NOT a Router */}
-      <nav className="navbar">
-        <Link to="/" className="logo">Fact or Quack 🦆</Link>
-        <div className="nav-links">
-          <Link to="/quiz">Quiz</Link>
-          <Link to="/facts">Random Facts</Link>
-          <Link to="/challenge">Challenge</Link>
-        </div>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/facts" element={<Facts />} />
-        <Route path="/challenge" element={<Challenge />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/learning" element={<LearningHub />} />
+      <Route path="/fallacies" element={<Fallacies />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/myth" element={<MythEvolution />} />
+      <Route path="/quiz" element={<Quiz />} />         
+      <Route path="/facts" element={<Facts />} />       
+      <Route path="/challenges" element={<Challenge />} /> 
+      <Route path="*" element={<Navigate to="/dashboard" />} />
+    </Routes>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
 
 
 
